@@ -3,7 +3,6 @@ var matrix = [];
 var grassArr = [];
 var grassEaterArr = [];
 var animalArr = [];
-var fireArr = [];
 
 
 function setup() {
@@ -31,9 +30,6 @@ function setup() {
       } else if (matrix[y][x] == 3) {
         var animal = new Animal(x, y, 3);
         animalArr.push(animal);
-      } else if (matrix[y][x] == 4) {
-        var animal = new Fire(x, y);
-        fireArr.push(Fire);
 
       }
     }
@@ -46,8 +42,7 @@ function setup() {
 
 
 function draw() {
-
- console.log(frameCount) ;
+  
   for (var y = 0; y < matrix.length; y++) {
     for (var x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x] == 1) {
@@ -58,9 +53,7 @@ function draw() {
         fill("yellow");
       } else if (matrix[y][x] == 3) {
         fill("#a8653e");
-      } else if (matrix[y][x] == 4) {
-        fill("red")
-      }
+      } 
       rect(x * side, y * side, side, side);
 
     }
@@ -83,25 +76,6 @@ function draw() {
     animalArr[i].die();
 
   }
-
-  
-
-  for (var y = 0; y < matrix.length; y++) {
-    for (var x = 0; x < matrix[y].length; x++) {
-      for(var i = 50; i<= 100; i++){
-        if(frameCount >= i){
-      
-          
-            matrix[y][x] = 4
-          
-          
-      }
-
-      
-
- }
-}
- }
 
 }
 

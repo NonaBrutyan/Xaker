@@ -1,8 +1,6 @@
-class GrassEater {
+class GrassEater extends Creature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x,y,index)
         this.multiply = 0
         this.energy = 10;
         this.directions = [];

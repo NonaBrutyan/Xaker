@@ -1,12 +1,12 @@
-class Animal {
-    constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+class Animal extends Creature{
+    constructor(x, y, index, gender) {
+        super(x,y,index)
+        this.gender = gender
         this.multiply = 0
         this.energy = 10;
         this.directions = [];
     }
+
 
     chooseCell(character) {
         this.getVeryNewCoordinates();
