@@ -3,6 +3,9 @@ var matrix = [];
 var grassArr = [];
 var grassEaterArr = [];
 var animalArr = [];
+var FireArr = [];
+var FireGeneratorArr = [];
+var Water = [];
 
 
 function setup() {
@@ -19,30 +22,50 @@ function setup() {
     }
   }
 
-  for (var y = 0; y < matrix.length; ++y) {
-    for (var x = 0; x < matrix[y].length; ++x) {
-      if (matrix[y][x] == 1) {
-        var gr = new Grass(x, y, 1);
-        grassArr.push(gr);
-      } else if (matrix[y][x] == 2) {
-        var eater = new GrassEater(x, y, 2);
-        grassEaterArr.push(eater);
-      } else if (matrix[y][x] == 3) {
-        var animal = new Animal(x, y, 3);
-        animalArr.push(animal);
 
+  for (var y = 0; y < matrix.length; y++) {
+    for (var x = 0; x < matrix[y].length; x++) {
+
+      if (matrix[y][x] == 1) {
+        var gr = new Grass(x, y);
+        grassArr.push(gr);
+      }
+      else if (matrix[y][x] == 2) {
+        if (grassEaterArr.length <= 20) {
+          var grEater = new GrassEater(x, y);
+          grassEaterArr.push(grEater);
+        }
+        else matrix[y][x] = 0;
+      }
+      else if (matrix[y][x] == 3) {
+        if (animalArr.length <= 20) {
+          var animal = new Animal(x, y);
+          animalArr.push(animal);
+        }
+        else matrix[y][x] = 0;
+      }
+      else if (matrix[y][x] == 4) {
+        var randFire = new Fire(x, y);
+        FireArr.push(randFire);
+      }
+      else if (matrix[y][x] == 5) {
+        var randFireGen = new FireGenerator(x, y);
+        FireGeneratorArr.push(randFireGen);
+      }
+      else if (matrix[y][x] == 6) {
+        if (WaterArr.length <= 20) {
+          var wt = new Water(x, y);
+          WaterArr.push(wt);
+        }
+        else matrix[y][x] = 0;
       }
     }
   }
 }
 
 
-
-
-
-
 function draw() {
-  
+
   for (var y = 0; y < matrix.length; y++) {
     for (var x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x] == 1) {
@@ -53,7 +76,14 @@ function draw() {
         fill("yellow");
       } else if (matrix[y][x] == 3) {
         fill("#a8653e");
-      } 
+      } else if (matrix[y][x] == 4) {
+        fill("red");
+      } else if (matrix[y][x] == 5) {
+        fill("orange");
+      } else if (matrix[y][x] == 6) {
+        fill("blue");
+      }
+
       rect(x * side, y * side, side, side);
 
     }
@@ -76,6 +106,22 @@ function draw() {
     animalArr[i].die();
 
   }
+  for (var i in FireArr) {
+    FireArr[i].move();
+    FireArr[i].burn();
+    FireArr[i].die();
+  }
+  for (var i in FireGeneratorArr) {
+    FireArr[i].move();
+    FireArr[i].mult();
+    FireArr[i].die();
+  }
+  for (var i in WaterArr) {
+    FireArr[i].move();
+    FireArr[i].extinguish();
+    FireArr[i].die();
+  }
 
 }
+
 
