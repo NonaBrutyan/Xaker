@@ -5,7 +5,7 @@ var grassEaterArr = [];
 var animalArr = [];
 var FireArr = [];
 var FireGeneratorArr = [];
-var Water = [];
+var WaterArr = [];
 
 
 function setup() {
