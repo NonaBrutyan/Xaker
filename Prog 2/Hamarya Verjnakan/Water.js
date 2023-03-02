@@ -1,11 +1,12 @@
 class Water extends Creature {
+    
     constructor(x, y) {
         super(x, y);
         this.energy = 5;
         this.directions = [];
     }
 
-
+    
     getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
@@ -19,7 +20,7 @@ class Water extends Creature {
         ];
     }
 
-    
+   
     chooseCell(character) {
         this.getNewCoordinates();
         return super.chooseCell(character);
@@ -51,7 +52,7 @@ class Water extends Creature {
         else this.move();
     }
 
-    
+   
     move() {
         if (this.energy >= 50) this.die();
         else {

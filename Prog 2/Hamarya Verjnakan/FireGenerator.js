@@ -19,13 +19,12 @@ class FireGenerator extends Creature {
         ];
     }
 
-    
+   
     chooseCell(character) {
         this.getNewCoordinates();
         return super.chooseCell(character);
     }
 
-   
     
     move() {
         if (this.energy <= 0) this.die();
@@ -46,11 +45,18 @@ class FireGenerator extends Creature {
                 this.y = y;
             }
 
+            if (this.energy > 0 && this.energy <= 30 ) {
+                if (weather == 'winter' || weather == 'spring') {
+                    if (this.energy % 5 == 0) this.mult(); 
+                }
+                else {
+                    if (this.energy % 2 == 1) this.mult(); 
+                }
+            }
         }
     }
 
 
-    
     mult() {
         var emptyCells = this.chooseCell(0);
         if (emptyCells.length != 0) {

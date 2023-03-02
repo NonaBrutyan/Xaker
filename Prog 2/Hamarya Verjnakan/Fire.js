@@ -53,8 +53,30 @@ class Fire extends Creature {
         ];
     }
 
-    
+     
+    chooseCell(character) {
+        if (weather == 'winter' || weather == 'spring') this.getNewSmallCoordinates(); 
+        else this.getNewCoordinates(); 
+        return super.chooseCell(character);
+    }
 
+    
+    killCell() {
+        if (weather == 'winter' || weather == 'spring') this.getNewSmallCoordinates(); 
+        else this.getNewCoordinates(); 
+
+        var found = [];
+        for (var i in this.directions) {
+            var x = this.directions[i][0];
+            var y = this.directions[i][1];
+            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+                found.push(this.directions[i]);
+            }
+        }
+        return found;
+    }
+
+    
     move() {
         this.energy--;
         var emptyCells = this.chooseCell(0);
@@ -111,7 +133,7 @@ class Fire extends Creature {
                             matrix[y][x] == 0;
                             for (var i in animalArr) {
                                 if (this.x == animalArr[i].x && this.y == animalArr[i].y) {
-                                    animalArr.splice(i, 1);
+                                   animalArr.splice(i, 1);
                                     break;
                                 }
                             }
@@ -144,12 +166,12 @@ class Fire extends Creature {
         }
     }
 
-    
+   
     die() {
         matrix[this.y][this.x] = 0;
         for (var i in FireArr) {
             if (this.x == FireArr[i].x && this.y == FireArr[i].y) {
-                FireArr.splice(i, 1);
+               FireArr.splice(i, 1);
                 break;
             }
         }

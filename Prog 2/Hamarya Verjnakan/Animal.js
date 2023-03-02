@@ -1,32 +1,12 @@
-class Animal extends Creature{
-    constructor(x, y, index, gender) {
-        super(x,y,index)
-        this.gender = gender
-        this.multiply = 0
-        this.energy = 10;
+class Animal extends Creature {
+    constructor(x, y) {
+        super(x, y);
+        this.energy = Math.round(random(10, 20));
         this.directions = [];
     }
 
-
-    chooseCell(character) {
-        this.getVeryNewCoordinates();
-        var Newfound = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    Newfound.push(this.directions[i]);
-                }
-            }
-        }
-        return Newfound;
-    }
-
-
-
-
-    getVeryNewCoordinates() {
+    
+    getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -39,90 +19,90 @@ class Animal extends Creature{
         ];
     }
 
+    
+    chooseCell(character) {
+        this.getNewCoordinates();
+        return super.chooseCell(character);
+    }
 
-
+    
     move() {
-        this.energy -= 5;
-        var newCell = random(this.chooseCell(0));
+        this.energy--;
+        var emptyCells = this.chooseCell(0);
+        if (emptyCells.length != 0) {
+            var randomCell = random(emptyCells);
 
-        if (newCell) {
-            var newX = newCell[0];
-            var newY = newCell[1];
+            var x = randomCell[0];
+            var y = randomCell[1];
 
+            matrix[y][x] = 3;
             matrix[this.y][this.x] = 0;
-            matrix[newY][newX] = 3
-            this.y = newY;
-            this.x = newX;
 
+            this.x = x;
+            this.y = y;
         }
     }
 
-
-
-
+    
     eat() {
-       
-        var newCell = random(this.chooseCell(2));
-        var newCell = random(this.chooseCell(1));
-        if (newCell) {
-            var newX = newCell[0];
-            var newY = newCell[1];
+        if (this.energy <= 0) this.die();
+        else {
+            var grassEatCells = this.chooseCell(2);
+            if (grassEatCells.length != 0) {
+                this.energy++;
+                var randomCell = random(grassEatCells);
+                
+                var x = randomCell[0];
+                var y = randomCell[1];
 
-            matrix[this.y][this.x] = 0;
-            matrix[newY][newX] = 3
+                matrix[y][x] = 3;
+                matrix[this.y][this.x] = 0;
 
-            for (var i in grassEaterArr) {
-                if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {
-                    grassEaterArr.splice(i, 1);
-                    break;
+                this.x = x;
+                this.y = y;
 
+                for (var i in grassEaterArr) {
+                    if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
+                        grassEaterArr.splice(i, 1);
+                        break;
+                    }
                 }
+                if(this.energy >= 2) this.mult();
             }
-
-            this.y = newY;
-            this.x = newX;
-            this.energy += 5;
+            else this.move();
         }
     }
 
 
-    mul() {
-        
-        this.multiply++;
-        var newCell = random(this.chooseCell(2));
+    mult() {
+        var emptyCells = this.chooseCell(0);
+        if (emptyCells.length != 0) {
+            var randomCell = random(emptyCells);
 
+            var x = randomCell[0];
+            var y = randomCell[1];
 
-        if (newCell && this.multiply >= 5) {
-            var newAnimal = new Animal(newCell[0], newCell[1]);
-            animalArr.push(newAnimal);
-            matrix[newCell[1]][newCell[0]] = 3;
-            this.multiply = 0;
+            matrix[y][x] = 3;
+
+            grassEaterArr.push(new Animal(x,y));
+
+            if (weather == 'spring') this.energy = 7; 
+            else if (weather == 'autumn') this.energy = 6; 
+            else this.energy = 5; 
         }
     }
 
-
-
-
-
+   
     die() {
-        
-        if (this.energy <= 0) {
-            matrix[this.y][this.x] = 0;
-
-
-            for (var i in animalArr) {
-                if (this.x == animalArr[i].x && this.y == animalArr[i].y) {
-                    animalArr.splice(i, 1);
-                    break;
-                }
+        matrix[this.y][this.x] = 0;
+        for (var i in animalArr) {
+            if (this.x == animalArr[i].x && this.y == animalArr[i].y) {
+                animalArr.splice(i, 1);
+                break;
             }
-
         }
-
     }
-
 }
-
 
 
 
