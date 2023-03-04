@@ -2,7 +2,7 @@ class Water extends Creature {
     
     constructor(x, y) {
         super(x, y);
-        this.energy = 5;
+        this.energy = 10000;
         this.directions = [];
     }
 
@@ -21,9 +21,9 @@ class Water extends Creature {
     }
 
    
-    chooseCell(character) {
+    chooseCell(ch) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(ch);
     }
 
     
@@ -54,9 +54,9 @@ class Water extends Creature {
 
    
     move() {
-        if (this.energy >= 50) this.die();
-        else {
-            this.energy++;
+        if (this.energy <= 0) this.die();
+        else if(this.energy > 20) {
+            this.energy--;
             var emptyCells = this.chooseCell(0);
             if (emptyCells.length != 0) {
                 var randomCell = random(emptyCells);
@@ -70,6 +70,23 @@ class Water extends Creature {
                 this.x = x;
                 this.y = y;
             }
+            else {
+                this.mult()
+            }
+        }
+    }
+
+    mult() {
+        var emptyCells = this.chooseCell(0);
+        if (emptyCells.length != 0) {
+            var randomCell = random(emptyCells);
+
+            var x = randomCell[0];
+            var y = randomCell[1];
+
+            matrix[y][x] = 6;
+
+           WaterArr.push(new Water(x,y));
         }
     }
 

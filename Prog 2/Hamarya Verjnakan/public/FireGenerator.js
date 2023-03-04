@@ -1,7 +1,7 @@
 class FireGenerator extends Creature {
     constructor(x, y) {
         super(x, y);
-        this.energy = 40;
+        this.energy = 10000;
         this.directions = [];
     }
 
@@ -20,9 +20,9 @@ class FireGenerator extends Creature {
     }
 
    
-    chooseCell(character) {
+    chooseCell(ch) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(ch);
     }
 
     
@@ -68,8 +68,6 @@ class FireGenerator extends Creature {
             matrix[y][x] = 4;
 
             FireArr.push(new Fire(x,y));
-
-            this.energy--;
         }
     }
 

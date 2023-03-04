@@ -21,7 +21,6 @@ var anToge = 0;
 
 
 var statistics = {
-  "timestamp": "",
   "grassSpawn": 0,
   "grassEaterSpawn": 0,
   "animalSpawn": 0,
@@ -72,14 +71,12 @@ function setup() {
           var grEater = new GrassEater(x, y);
           grassEaterArr.push(grEater);
         }
-        else matrix[y][x] = 0;
       }
       else if (matrix[y][x] == 3) {
         if (animalArr.length <= 20) {
           var animal = new Animal(x, y);
           animalArr.push(animal);
         }
-        else matrix[y][x] = 0;
       }
       else if (matrix[y][x] == 4) {
         var randFire = new Fire(x, y);
@@ -94,7 +91,6 @@ function setup() {
           var wt = new Water(x, y);
           WaterArr.push(wt);
         }
-        else matrix[y][x] = 0;
       }
     }
   }
@@ -149,34 +145,19 @@ function draw() {
     grassArr[i].mult();
   }
   for (var i in grassEaterArr) {
-    grassEaterArr[i].mult();
-    grassEaterArr[i].move();
     grassEaterArr[i].eat();
-    grassEaterArr[i].die();
-
   }
   for (var i in animalArr) {
-    animalArr[i].mult();
-    animalArr[i].move();
     animalArr[i].eat();
-    animalArr[i].die();
-
   }
   for (var i in FireArr) {
-
-    FireArr[i].move();
     FireArr[i].burn();
-    FireArr[i].die();
   }
   for (var i in FireGeneratorArr) {
     FireGeneratorArr[i].move();
-    FireGeneratorArr[i].mult();
-    FireGeneratorArr[i].die();
   }
   for (var i in WaterArr) {
-    WaterArr[i].move();
     WaterArr[i].extinguish();
-    WaterArr[i].die();
   }
 }
 
@@ -219,7 +200,6 @@ function drawMatrix() {
 }
 
 
-function mouseClicked() {}
 function getCoords() {
   var i, j;
   console.log("Mouse clicked on coordinates x: " + mouseX + " and y: " + mouseY);
@@ -257,8 +237,8 @@ function getCoords() {
 }
 
 
+
 function generateStatistics() {
-  statistics.timestamp = (new Date()).toString();
   statistics.grassSpawn = grassArr.length;
   statistics.grassEaterSpawn = grassEaterArr.length;
   statistics.animalSpawn = animalArr.length;

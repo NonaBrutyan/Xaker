@@ -1,7 +1,7 @@
 class Fire extends Creature {
     constructor(x, y) {
         super(x, y);
-        this.energy = 10;
+        this.energy = 11000;
         this.directions = [];
     }
 
@@ -96,7 +96,7 @@ class Fire extends Creature {
 
     
     burn() {
-        if (this.energy > 1) this.move();
+        if (this.energy > 10) this.move();
 
         else if (this.energy <= 0) this.die();
 
@@ -110,8 +110,7 @@ class Fire extends Creature {
 
                     if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
 
-                        if (matrix[y][x] == 0) matrix[y][x] = 0;
-                        else if (matrix[y][x] == 1) {
+                        if (matrix[y][x] == 1) {
                             matrix[y][x] == 0;
                             for (var i in grassArr) {
                                 if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
@@ -143,15 +142,6 @@ class Fire extends Creature {
                             for (var i in FireGeneratorArr) {
                                 if (this.x == FireGeneratorArr[i].x && this.y == FireGeneratorArr[i].y) {
                                     FireGeneratorArr.splice(i, 1);
-                                    break;
-                                }
-                            }
-                        }
-                        else if (matrix[y][x] == 6) {
-                            matrix[y][x] == 0;
-                            for (var i in WaterArr) {
-                                if (this.x == WaterArr[i].x && this.y == WaterArr[i].y) {
-                                    WaterArr.splice(i, 1);
                                     break;
                                 }
                             }

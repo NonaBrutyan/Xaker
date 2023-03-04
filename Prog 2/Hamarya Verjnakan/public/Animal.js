@@ -1,7 +1,7 @@
 class Animal extends Creature {
     constructor(x, y) {
         super(x, y);
-        this.energy = Math.round(random(10, 20));
+        this.energy = 20
         this.directions = [];
     }
 
@@ -20,9 +20,9 @@ class Animal extends Creature {
     }
 
     
-    chooseCell(character) {
+    chooseCell(ch) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(ch);
     }
 
     
@@ -49,7 +49,7 @@ class Animal extends Creature {
         else {
             var grassEatCells = this.chooseCell(2);
             if (grassEatCells.length != 0) {
-                this.energy++;
+                this.energy+=2;
                 var randomCell = random(grassEatCells);
                 
                 var x = randomCell[0];
@@ -61,12 +61,6 @@ class Animal extends Creature {
                 this.x = x;
                 this.y = y;
 
-                for (var i in grassEaterArr) {
-                    if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
-                        grassEaterArr.splice(i, 1);
-                        break;
-                    }
-                }
                 if(this.energy >= 2) this.mult();
             }
             else this.move();
