@@ -1,3 +1,5 @@
+
+var socket = io()
 var cnv;
 
 var side = 10;
@@ -56,6 +58,8 @@ function setup() {
 
     frameRate(500);
     cnv = createCanvas(matrix[0].length * side, matrix.length * side);
+    cnv.parent('container')
+
     cnv.mouseClicked(getCoords);
     background('#acacac');
 
@@ -99,7 +103,8 @@ function setup() {
 
 function draw() {
   drawMatrix();
-  
+  if(frameCount % 60 == 0)
+        socket.emit('send data', generateStatistics())
   days++
   frameSec++;
 
@@ -134,11 +139,7 @@ function draw() {
       days = 0;
   }
 
-  
-  if (frameSec == 10) {
-      generateStatistics();
-      frameSec = 0;
-  }
+
   
   
   for (var i in grassArr) {
@@ -201,7 +202,7 @@ function drawMatrix() {
 
 
 function getCoords() {
-  var i, j;
+  var i, j
   console.log("Mouse clicked on coordinates x: " + mouseX + " and y: " + mouseY);
   i = mouseX / 10;
   i = Math.floor(i);
@@ -239,14 +240,19 @@ function getCoords() {
 
 
 function generateStatistics() {
-  statistics.grassSpawn = grassArr.length;
-  statistics.grassEaterSpawn = grassEaterArr.length;
-  statistics.animalSpawn = animalArr.length;
-  statistics.fireSpawn = FireArr.length;
-  statistics.fireGeneratorSpawn = FireGeneratorArr.length;
-  statistics.waterSpawn = WaterArr.length;
-  statistics.weather = weather;
-  statistics.geToan = geToan;
-  statistics.anToge = anToge;
+  var statistics={
+      'grassSpawn' : grassArr.length,
+      'grassEaterSpawn' : grassEaterArr.length,
+      'animalSpawn' : animalArr.length,
+      'fireSpawn' : FireArr.length,
+      'fireGeneratorSpawn' : FireGeneratorArr.length,
+      'waterSpawn' : WaterArr.length,
+      'weather' : weather,
+      'geToan' : geToan,
+      'anToge' : anToge,
+  }
   
+  return statistics
 } 
+
+

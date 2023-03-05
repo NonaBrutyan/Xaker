@@ -88,7 +88,7 @@ class GrassEater extends Creature {
 
                 grassEaterArr.push(new GrassEater(a, b));
                 matrix[b][a] = 2;
-                console.log('New Grass Eater was born!');
+                // console.log('New Grass Eater was born!');
             }
             if (weather == 'winter') this.energy = 13;
             else if (weather == 'summer') this.energy = 7;

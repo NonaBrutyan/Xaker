@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>Programming 3 | Final</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="Creature.js"></script>
+    <script src="Fire.js"></script>
+    <script src="FireGenerator.js"></script>
+    <script src="Water.js"></script>
+    <script src="Animal.js"></script>
+    <script src="grassEater.js"></script>
+    <script src="grass.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <h1 id="weather"></h1>
+    <p class="home-texts">Click over a grass eater (yellow) to turn it to an animal (brown) and vice versa.</p>
+    <div id="container">
+            <table id="data">
+                    <tr>
+                        <th>Num</th>
+                        <th>Grass Spawn</th>
+                        <th>Grass Eater Spawn</th>
+                        <th>Animal Spawn</th>
+                        <th>Fire Spawn</th>
+                        <th>Fire Generator Spawn</th>
+                        <th>Water Spawn</th>
+                        <th>Weather </th>
+                        <th>geToan </th>
+                        <th>anToge </th>
+                    </tr>
+                </table>
+    </div>
+   
+
+    <script>
+        function main() {
+            var socket = io()
+            var statListHTML = "";
+            var dataTable = document.getElementById("data");
+
+            var statNumCount = 0;
+
+
+
+            socket.on("show data", (data) => {
+                statNumCount++;
+                var tr = document.createElement('tr')
+                var id = document.createElement('td')
+                id.innerText = statNumCount
+                tr.appendChild(id)
+                for (const [key, value] of Object.entries(data)) {
+                    var td = document.createElement('td')
+                    td.innerText = value
+                    tr.appendChild(td)
+                }
+                dataTable.appendChild(tr)
+            })
+
+        }
+        window.onload = main
+    </script>
+
+</body>
+
+</html>
